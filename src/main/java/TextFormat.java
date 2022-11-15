@@ -1,14 +1,18 @@
 import javax.print.attribute.TextSyntax;
+import java.util.Map;
+import java.util.function.Function;
 
 public class TextFormat {
+	//Map и здесь у нас будет enum. В значение value у нас будет храниться
+	//ф-ция кот. принимает один аргумент в виде строки и должен вернуть аргумент в виде строки
+	//Ф-ция интерфейса у нас проеобразует один тип в другой и мы указываем это в типе
+	Map<SyntaxFormat, Function<String, String>> syntaxMapping =
+			Map.of(
+					SyntaxFormat.MD, s -> "**" + s + "**",
+					SyntaxFormat.HTML, this::boldHTML  /* s -> boldHTML(s) or s -> "<strong>" + s + "</strong>" */
+			);
 	public String bold(String text, SyntaxFormat formatSyntax){
-		if (formatSyntax == SyntaxFormat.HTML){
-			return boldHTML(text);
-		} else if (formatSyntax == SyntaxFormat.MD) {
-			return boldMD(text);
-		}
-		throw  new IllegalArgumentException("There is no SyntaxType ={" + formatSyntax + "}");
-
+		return syntaxMapping.get(formatSyntax).apply(text);
 	}
 	private String boldMD(String text){
 		return "**" + text + "**";
