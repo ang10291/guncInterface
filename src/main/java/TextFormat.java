@@ -9,7 +9,8 @@ public class TextFormat {
 	Map<SyntaxFormat, Function<String, String>> syntaxMapping =
 			Map.of(
 					SyntaxFormat.MD, s -> "**" + s + "**",
-					SyntaxFormat.HTML, this::boldHTML  /* s -> boldHTML(s) or s -> "<strong>" + s + "</strong>" */
+					SyntaxFormat.HTML, this::boldHTML  /* s -> boldHTML(s) or s -> "<strong>" + s + "</strong>" */,
+                    SyntaxFormat.BB, s -> "[b]" + s + "[/b]"
 			);
 	public String bold(String text, SyntaxFormat formatSyntax){
 		return syntaxMapping.get(formatSyntax).apply(text);
@@ -21,6 +22,8 @@ public class TextFormat {
 		return "<strong>" + text + "</strong>";
 	}
 	public enum SyntaxFormat {
-		MD, HTML
+		MD, HTML, BB;
+
 	}
+	//public   Function<String, String> BB = ;
 }
