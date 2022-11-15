@@ -9,7 +9,13 @@ public class TextFormat {
 	Map<SyntaxFormat, Function<String, String>> syntaxMapping =
 			Map.of(
 					SyntaxFormat.MD, s -> "**" + s + "**",
-					SyntaxFormat.HTML, this::boldHTML  /* s -> boldHTML(s) or s -> "<strong>" + s + "</strong>" */,
+//					SyntaxFormat.HTML, this::boldHTML  /* s -> boldHTML(s) or s -> "<strong>" + s + "</strong>" */,
+
+					SyntaxFormat.HTML, s -> boldHTML(s, "sdf"), // если метод boldHTML имеет больше 1 параметра
+//					SyntaxFormat.HTML, s -> { //если у нас обработка больше, чем 1 строчка, нам надо прописать покрупнее код
+//						String bolded = boldHTML(s, "h");
+//						return boldMD(bolded);
+//					},
                     SyntaxFormat.BB, s -> "[b]" + s + "[/b]"
 			);
 	public String bold(String text, SyntaxFormat formatSyntax){
@@ -18,12 +24,12 @@ public class TextFormat {
 	private String boldMD(String text){
 		return "**" + text + "**";
 	}
-	private String boldHTML(String text){
-		return "<strong>" + text + "</strong>";
+	private String boldHTML(String text, String prefix){
+		return "<strong>" + prefix + text + "</strong>";
 	}
 	public enum SyntaxFormat {
 		MD, HTML, BB;
 
 	}
-	//public   Function<String, String> BB = ;
+
 }
